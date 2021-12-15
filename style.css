@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.birb {
+    height: 50px;
+    width: 50px;
+    background-color: yellow;
+    border: solid 1px black;
+    position: absolute;
+    /* transition: 300ms;
+    bottom: 300px; */
+}
+
+.grid {
+    height: 640px;
+    width: 480px;
+    border: 1px solid black;
+    position: relative;
+}
+
+.platform {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 15px;
+    bottom: 50px;
+    border: 1px solid black;
+    background-color: green;
+}

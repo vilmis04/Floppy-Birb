@@ -138,10 +138,10 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
             if (towerArr[0].left < -100) {
                 const bottomTower = towerArr[0].hitbox;
-                bottomTower.classList.remove("towerBottom");
+                bottomTower.remove();
 
                 const topTower = towerArr[1].hitbox;
-                topTower.classList.remove("towerTop");
+                topTower.remove();
 
                 towerArr.shift();
                 towerArr.shift();

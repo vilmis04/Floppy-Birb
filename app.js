@@ -105,7 +105,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
     }
 
     function generateTower() {
-        const bottomTowerHeight = Math.round(Math.random()*(500-GAP_SIZE)+65);
+        const bottomTowerHeight = Math.round(Math.random()*(500-GAP_SIZE)+10);
         const topTowerHeight = 640-65-GAP_SIZE-bottomTowerHeight;
         const bottomTower = new Tower(bottomTowerHeight, "towerBottom");
         const topTower = new Tower(topTowerHeight, "towerTop");

@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const birb = document.createElement("div");
     const platform = document.createElement("div");
     let isGameOver = false;
-    const birbPosLeft = 35;
+    const birbPosLeft = 168;
     let birbPosBottom = 300;
     let fallTimerID;
     let jumpTimerID;
@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
         grid.appendChild(birb);
         birb.classList.add("birb");
         birb.style.bottom = birbPosBottom + "px";
-        birb.style.left = birbPosLeft + "%";
+        birb.style.left = birbPosLeft + "px";
         
     }
 

@@ -19,10 +19,11 @@ window.addEventListener("DOMContentLoaded", ()=>{
     // Classes
 
     class Tower {
-        constructor(height, classStr) {
+        constructor(height, classStr, sideBool) {
             this.left = 480;
             this.height = height;
             this.hitbox = document.createElement("div");
+            this.bottomSide = sideBool;
 
             const hitbox = this.hitbox;
             hitbox.classList.add(classStr);
@@ -47,7 +48,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
             createBirb();
             grid.addEventListener("click", delayBeforeJumpUp);
             grid.addEventListener("click", delayBeforeTowers, {once: true});
-            towerTimerID = setInterval(moveTowers, 15);
+            towerTimerID = setInterval(moveTowers, 8);
         }
     }
 
@@ -107,8 +108,8 @@ window.addEventListener("DOMContentLoaded", ()=>{
     function generateTower() {
         const bottomTowerHeight = Math.round(Math.random()*(500-GAP_SIZE)+10);
         const topTowerHeight = 640-65-GAP_SIZE-bottomTowerHeight;
-        const bottomTower = new Tower(bottomTowerHeight, "towerBottom");
-        const topTower = new Tower(topTowerHeight, "towerTop");
+        const bottomTower = new Tower(bottomTowerHeight, "towerBottom", true);
+        const topTower = new Tower(topTowerHeight, "towerTop", false);
         towerArr.push(bottomTower);
         towerArr.push(topTower);
     }
@@ -116,12 +117,18 @@ window.addEventListener("DOMContentLoaded", ()=>{
     
 
     function moveTowers() {
-        let positionIncrement = 2;
+        let positionIncrement = 1;
+        let currentTowerHeight;
+
         
         towerArr.forEach(tower => {
             let hitbox = tower.hitbox;
             tower.left -= positionIncrement;
             hitbox.style.left = tower.left + "px";
+
+            if(tower.left<218 && tower.left>68 && tower.bottomSide) {
+                detectCollision(tower.height);
+            }
 
 
             if (towerArr[0].left < 215 && !generatedTower) {
@@ -141,7 +148,17 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
                 generatedTower = false;
             }
-        })
+        });
+    }
+
+
+    function detectCollision(bottomTowerHeight) {
+        const topTowerBottom = bottomTowerHeight+GAP_SIZE+15;
+        const bottomTowerTop = bottomTowerHeight+65;
+
+        if (birbPosBottom<bottomTowerTop || birbPosBottom>topTowerBottom) {
+            gameOver();
+        }
     }
     
     // Game

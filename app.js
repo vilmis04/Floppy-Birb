@@ -6,6 +6,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const birb = document.createElement("div");
     const platform = document.createElement("div");
     const introText = document.createElement("div");
+    const score = document.createElement("div");
     let isGameOver = false;
     const birbPosLeft = 168;
     let birbPosBottom = 300;
@@ -16,7 +17,12 @@ window.addEventListener("DOMContentLoaded", ()=>{
     let towerArr = [];
     const TIME_BEFORE_FIRST_TOWER = 1000;
     let generatedTower = false;
-
+    let scoreCounter = 0;
+    const storage = window.localStorage;
+    let highscore = storage.getItem("highscore");
+    highscore = highscore == null ? 0 : highscore;
+    let isCounted = false;
+    
     // Classes
 
     class Tower {
@@ -41,13 +47,11 @@ window.addEventListener("DOMContentLoaded", ()=>{
         birb.classList.add("birb");
         birb.style.bottom = birbPosBottom + "px";
         birb.style.left = birbPosLeft + "px";
-        
     }
 
     function start() {
         if (!isGameOver) {
             createBirb();
-            showIntroText();
             grid.addEventListener("click", removeIntroText, {once: true})
             grid.addEventListener("click", delayBeforeJumpUp);
             grid.addEventListener("click", delayBeforeTowers, {once: true});
@@ -63,6 +67,13 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
     function removeIntroText() {
         introText.remove();
+        showScore();
+    }
+
+    function showScore() {
+        score.textContent = scoreCounter;
+        score.classList.add("onscreen-score");
+        grid.append(score);
     }
 
 
@@ -103,13 +114,17 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
     function gameOver() {
         console.log("Game Over");
-            isGameOver = true;
-            clearInterval(fallTimerID);
-            clearInterval(jumpTimerID);
-            clearInterval(towerTimerID);
-            grid.removeEventListener("click", delayBeforeJumpUp);
+        isGameOver = true;
+        removeControls();
+        clearInterval(jumpTimerID);
+        clearInterval(fallTimerID);
     }
 
+    function removeControls() {
+        clearInterval(towerTimerID);
+        grid.removeEventListener("click", delayBeforeJumpUp);
+    }
+     
     function createPlatform() {
         platform.classList.add("platform");
         grid.appendChild(platform);
@@ -132,8 +147,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
     function moveTowers() {
         let positionIncrement = 1;
-        let currentTowerHeight;
-
         
         towerArr.forEach(tower => {
             let hitbox = tower.hitbox;
@@ -144,6 +157,10 @@ window.addEventListener("DOMContentLoaded", ()=>{
                 detectCollision(tower.height);
             }
 
+            if(towerArr[0].left < 143 && !isCounted) {
+                updateScore();
+                isCounted = true;
+            }
 
             if (towerArr[0].left < 215 && !generatedTower) {
                 generateTower();
@@ -161,23 +178,32 @@ window.addEventListener("DOMContentLoaded", ()=>{
                 towerArr.shift();
 
                 generatedTower = false;
+                isCounted = false;
             }
         });
     }
 
+    function updateScore() {
+        scoreCounter++;
+        score.textContent = scoreCounter;
+    }
+
 
     function detectCollision(bottomTowerHeight) {
+        
         const topTowerBottom = bottomTowerHeight+GAP_SIZE+15;
         const bottomTowerTop = bottomTowerHeight+65;
 
         if (birbPosBottom<bottomTowerTop || birbPosBottom>topTowerBottom) {
-            gameOver();
+            removeControls();
+            console.log("Collision!");
         }
     }
     
     // Game
 
     createPlatform();
+    showIntroText();
     start();
 
 

@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
     const grid = document.querySelector(".grid");
     const birb = document.createElement("div");
     const platform = document.createElement("div");
+    const introText = document.createElement("div");
     let isGameOver = false;
     const birbPosLeft = 168;
     let birbPosBottom = 300;
@@ -46,11 +47,24 @@ window.addEventListener("DOMContentLoaded", ()=>{
     function start() {
         if (!isGameOver) {
             createBirb();
+            showIntroText();
+            grid.addEventListener("click", removeIntroText, {once: true})
             grid.addEventListener("click", delayBeforeJumpUp);
             grid.addEventListener("click", delayBeforeTowers, {once: true});
             towerTimerID = setInterval(moveTowers, 8);
         }
     }
+
+    function showIntroText() {
+        introText.textContent = "Click on the screen to start!"
+        introText.classList.add("intro-text");
+        grid.append(introText);
+    }
+
+    function removeIntroText() {
+        introText.remove();
+    }
+
 
     function jumpUp() {
         clearInterval(fallTimerID);

@@ -21,6 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
   let highscore = storage.getItem("highscore");
   highscore = highscore == null ? 0 : highscore;
   let isCounted = false;
+  let isCollision = false;
 
   // Classes
 
@@ -49,6 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function start() {
+    scoreCounter = 0;
     if (!isGameOver) {
       createBirb();
       grid.addEventListener("click", removeIntroText, { once: true });
@@ -112,9 +114,24 @@ window.addEventListener("DOMContentLoaded", () => {
   function gameOver() {
     console.log("Game Over");
     isGameOver = true;
+
+    if (!isCollision) { flashScreen();}
+
     removeControls();
     clearInterval(jumpTimerID);
     clearInterval(fallTimerID);
+    isCollision = false;
+
+    updateHighscore();
+  }
+
+  function updateHighscore() {
+          if (scoreCounter > highscore) {
+          highscore = scoreCounter;
+          storage.setItem("highscore", highscore);
+      }
+      console.log("score: "+scoreCounter);
+      console.log("highscore: "+highscore);
   }
 
   function removeControls() {
@@ -187,10 +204,26 @@ window.addEventListener("DOMContentLoaded", () => {
     const topTowerBottom = bottomTowerHeight + GAP_SIZE + 15;
     const bottomTowerTop = bottomTowerHeight + 65;
 
+    isCollision = true;
+
     if (birbPosBottom < bottomTowerTop || birbPosBottom > topTowerBottom) {
       removeControls();
+      flashScreen();
       console.log("Collision!");
     }
+  }
+
+  function flashScreen() {
+    const screenFlash = document.createElement("div");
+    screenFlash.classList.add("black-screen");
+    screenFlash.style.background = "black";
+    grid.append(screenFlash);
+      setTimeout(() => {
+          screenFlash.style.background = "white";
+        }, 100);
+      setTimeout(() => {
+          screenFlash.remove();
+        }, 100);
   }
 
   // Game

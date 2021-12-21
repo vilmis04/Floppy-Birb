@@ -172,11 +172,15 @@ function startNewGame() {
   function removeControls() {
     clearInterval(towerTimerID);
     grid.removeEventListener("click", delayBeforeJumpUp);
+    platform.classList.remove("platform-animation");
   }
 
   function createPlatform() {
-    platform.classList.add("platform");
-    grid.appendChild(platform);
+    const ground = document.createElement("div");
+    ground.classList.add("ground");
+    platform.classList.add("platform", "platform-animation");
+    
+    grid.append(platform, ground);
   }
 
   function delayBeforeTowers() {

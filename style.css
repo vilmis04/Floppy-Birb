@@ -39,8 +39,43 @@ body {
   right: 0;
   height: 15px;
   bottom: 50px;
-  border: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 3px solid green;
   background-color: lightgreen;
+
+  background: repeating-linear-gradient(-45deg, lightgreen, lightgreen 20px, green 20px, green 25px);
+  background-repeat: repeat-x;
+  background-size: 960px 100%;
+  }
+
+  .platform-animation {
+    animation-name: platform-move;
+    animation-timing-function: linear;
+    animation-duration: 1992ms;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes platform-move {
+    from {
+      background-position: 0;
+    }
+    to {
+      background-position: -249px;
+    }
+  }
+
+.ground {
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px;
+
+  background-color: #FFBC54;
+
+  -webkit-box-shadow: inset 0px 3px 0px 0px sandybrown; 
+  box-shadow: inset 0px 3px 0px 0px sandybrown;
 }
 
 .towerBottom,
@@ -129,3 +164,4 @@ body {
 .restart-button:hover {
   color: white;
 }
+

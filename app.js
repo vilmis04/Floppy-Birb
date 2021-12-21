@@ -50,6 +50,23 @@ function startNewGame() {
     birb.classList.add("birb");
     birb.style.bottom = birbPosBottom + "px";
     birb.style.left = birbPosLeft + "px";
+
+    addVisuals();
+  }
+
+  function addVisuals() {
+    const visualContainer = document.createElement("div");
+    visualContainer.classList.add("visual-container");
+
+    addWing(visualContainer);
+
+    birb.append(visualContainer);
+  }
+
+  function addWing(parentElement) {
+      const wing = document.createElement("div");
+      wing.classList.add("wing", "wing-animation");
+      parentElement.append(wing);
   }
 
   function start() {
@@ -173,6 +190,7 @@ function startNewGame() {
     clearInterval(towerTimerID);
     grid.removeEventListener("click", delayBeforeJumpUp);
     platform.classList.remove("platform-animation");
+    document.querySelector(".wing").classList.remove("wing-animation");
   }
 
   function createPlatform() {

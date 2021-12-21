@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'VT323', monospace;
 }
 
 body {
@@ -96,4 +97,35 @@ body {
   bottom: 0;
   z-index: 1000;
   transition: 100ms;
+}
+
+.scoreboard {
+  padding: 1rem;
+  font-size: 50px;
+  position: absolute;
+  z-index: 1000;
+
+  top: 100px;
+  left: 153px;
+
+  background-color: lightgray;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.restart-button {
+  background-color: orange;
+  cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.restart-button:hover {
+  color: white;
 }

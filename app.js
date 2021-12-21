@@ -1,4 +1,6 @@
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", startNewGame);
+
+function startNewGame() {
   // Definitions
 
   const grid = document.querySelector(".grid");
@@ -6,6 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const platform = document.createElement("div");
   const introText = document.createElement("div");
   const score = document.createElement("div");
+  const scoreboard = document.createElement("div");
   let isGameOver = false;
   const birbPosLeft = 168;
   let birbPosBottom = 300;
@@ -120,18 +123,50 @@ window.addEventListener("DOMContentLoaded", () => {
     removeControls();
     clearInterval(jumpTimerID);
     clearInterval(fallTimerID);
-    isCollision = false;
 
     updateHighscore();
+    displayScoreboard();
   }
 
   function updateHighscore() {
-          if (scoreCounter > highscore) {
-          highscore = scoreCounter;
-          storage.setItem("highscore", highscore);
+    if (scoreCounter > highscore) {
+    highscore = scoreCounter;
+    storage.setItem("highscore", highscore);
+    }
+    console.log("score: "+scoreCounter);
+    console.log("highscore: "+highscore);
+  }
+
+  function displayScoreboard() {
+    scoreboard.classList.add("scoreboard");
+
+    const scoreTitle = document.createElement("div");
+    const scoreValue = document.createElement("div");
+    const highscoreTitle = document.createElement("div");
+    const highscoreValue = document.createElement("div");
+    const restartBtn = document.createElement("div");
+
+    scoreTitle.textContent = "Score:";
+    scoreValue.textContent = scoreCounter;
+
+    highscoreTitle.textContent = "Best:"
+    highscoreValue.textContent = highscore;
+
+    restartBtn.textContent = "RESTART";
+    restartBtn.classList.add("restart-button");
+    restartBtn.addEventListener("click", ()=> {
+        clearScreen();
+        setTimeout(startNewGame, 100);
+    });
+
+    scoreboard.append(scoreTitle, scoreValue, highscoreTitle, highscoreValue, restartBtn);
+    grid.append(scoreboard);
+  }
+
+  function clearScreen() {
+      while (grid.firstChild) {
+          grid.firstChild.remove();
       }
-      console.log("score: "+scoreCounter);
-      console.log("highscore: "+highscore);
   }
 
   function removeControls() {
@@ -214,6 +249,8 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function flashScreen() {
+    score.remove();
+
     const screenFlash = document.createElement("div");
     screenFlash.classList.add("black-screen");
     screenFlash.style.background = "black";
@@ -231,4 +268,4 @@ window.addEventListener("DOMContentLoaded", () => {
   createPlatform();
   showIntroText();
   start();
-});
+}

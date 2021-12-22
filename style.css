@@ -177,19 +177,19 @@ body {
 
 .wing {
   position: absolute;
-  height: 40px;
-  width: 30px;
-  /* background-color: black; */
+  height: 60px;
+  width: 40px;
   background: repeating-linear-gradient(
   0deg,
-  black,
-  black 20px,
-  transparent 20px,
-  transparent 40px
+  orange,
+  orange 30px,
+  transparent 30px,
+  transparent 60px
   );
+  border-radius: 0 0 150px 150px;
 
-  top: 10px;
-  left: 10%;
+  top: 0px;
+  left: 5%;
 }
 
 .wing-animation {

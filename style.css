@@ -30,6 +30,7 @@ body {
   border: 1px solid black;
   position: relative;
   overflow: hidden;
+  background-color: skyblue;
 }
 
 .platform {
@@ -95,6 +96,8 @@ body {
 
 .intro-text {
   text-align: center;
+  position: relative;
+  z-index: 995;
   margin-top: 100px;
   font-family: 'VT323', monospace;
   font-size: 32px;
@@ -105,7 +108,7 @@ body {
 
 @keyframes intro-text-animation {
     0% { color: black;  }
-    50% { color: lightgray; }
+    50% { color: grey; }
     100% { color: black; }
 }
 
@@ -187,18 +190,6 @@ body {
 
   top: 10px;
   left: 10%;
-
-  /* transform: skew(-30deg); */
-
-  /* transform: rotateX(0.25turn) translateY(0px);
-  transform: rotateX(0.5turn) translateY(1px); */
-  /* transform: rotateX(1turn) translateY(10px); */
-
-
-  /* transform: skew(-30deg) rotateX(90deg); */
-
-
-
 }
 
 .wing-animation {
@@ -209,39 +200,17 @@ body {
 }
 
 @keyframes flapping {
-  /* 0% {
-    transform: rotateX(0turn);
-    
-  } */
-  /* 25% { transform: rotateX(0.5turn) translateY(10px); } */
-  /* 50% {
-    transform: rotateX(0.25turn);
-
-  } */
-  /* 75% { transform: rotateX(0.0turn) translateY(-10px); } */
-  /* 100% {
-    transform: rotateX(0turn);
-
-  } */
-
-
   0% { transform: rotateX(0.25turn); }
   25% { transform: skew(30deg) rotateX(0.5turn); }
   50% { transform: rotateX(0.25turn); }
   75% { transform: skew(-30deg) rotateX(0turn); }
   100% { transform: rotateX(0.25turn); }
+}
 
-  /* 0% {
-    transform: skew(-30deg) rotateX(80deg);
-  }
-  25% {
-    transform: skew(-30deg) rotateX(0deg);
-  }
-  50% {transform: rotateX(90deg);}
-  75% {
-    transform: skew(-30deg) rotateX(180deg);
-  }
-  100% {
-    transform: skew(-30deg) rotateX(80deg);
-  } */
+.cloud-canvas {
+  position: absolute;
+  height: 50px;
+  width: 100px;
+  z-index: 0;
+  /* background-color: black; */
 }

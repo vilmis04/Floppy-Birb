@@ -15,8 +15,10 @@ function startNewGame() {
   let fallTimerID;
   let jumpTimerID;
   let towerTimerID;
+  let cloudTimerID;
   const GAP_SIZE = 250;
   let towerArr = [];
+  let cloudArr = [];
   const TIME_BEFORE_FIRST_TOWER = 1000;
   let generatedTower = false;
   let scoreCounter = 0;
@@ -25,6 +27,7 @@ function startNewGame() {
   highscore = highscore == null ? 0 : highscore;
   let isCounted = false;
   let isCollision = false;
+  let generatedCloud = false;
 
   // Classes
 
@@ -43,7 +46,48 @@ function startNewGame() {
     }
   }
 
+  class Cloud {
+    constructor() {
+      this.left = 480;
+      this.bottom = Math.round(Math.random() * 450 + 100);
+      this.canvas = document.createElement("canvas");
+      this.size = Math.random() * 0.5 + 0.5;
+      this.speed = Math.round(Math.random() * 1 + 1);
+      
+      let bottom = this.bottom;
+      let left = this.left;
+      const canvas = this.canvas;
+      canvas.style.bottom = bottom+"px";
+      canvas.style.left = left+"px";
+      canvas.style.transform = "scale("+this.size+")";
+      canvas.classList.add("cloud-canvas");
+      drawCloud(canvas);
+
+      
+      grid.append(canvas);
+    }
+  }
+
   // Functions
+
+  function drawCloud(canvas) {
+    const ctx = canvas.getContext("2d");
+    canvas.width = 100;
+    canvas.height = 50;
+
+    ctx.strokeStyle = "white";
+    ctx.fillStyle = "white";
+
+    ctx.beginPath();
+    ctx.arc(20,30,15,0,Math.PI * 2);
+    ctx.arc(35,15,15,0,Math.PI * 2);
+    ctx.arc(55,15,15,0,Math.PI * 2);
+    ctx.arc(80,30,15,0,Math.PI * 2);
+    ctx.fillRect(20,30,60,16);
+    ctx.stroke();
+    ctx.fill();
+    ctx.closePath();
+  }
 
   function createBirb() {
     grid.appendChild(birb);
@@ -77,6 +121,9 @@ function startNewGame() {
       grid.addEventListener("click", delayBeforeJumpUp);
       grid.addEventListener("click", delayBeforeTowers, { once: true });
       towerTimerID = setInterval(moveTowers, 8);
+      cloudArr.push(new Cloud);
+      cloudTimerID = setInterval(moveClouds, 30);
+      setTimeout(cloudArr.push(new Cloud), Math.random() * 1000 + 500);
     }
   }
 
@@ -132,7 +179,7 @@ function startNewGame() {
   }
 
   function gameOver() {
-    console.log("Game Over");
+    // console.log("Game Over");
     isGameOver = true;
 
     if (!isCollision) { flashScreen();}
@@ -150,8 +197,8 @@ function startNewGame() {
     highscore = scoreCounter;
     storage.setItem("highscore", highscore);
     }
-    console.log("score: "+scoreCounter);
-    console.log("highscore: "+highscore);
+    // console.log("score: "+scoreCounter);
+    // console.log("highscore: "+highscore);
   }
 
   function displayScoreboard() {
@@ -173,6 +220,7 @@ function startNewGame() {
     restartBtn.classList.add("restart-button");
     restartBtn.addEventListener("click", ()=> {
         clearScreen();
+        cloudArr = [];
         setTimeout(startNewGame, 100);
     });
 
@@ -212,6 +260,26 @@ function startNewGame() {
     const topTower = new Tower(topTowerHeight, "towerTop", false);
     towerArr.push(bottomTower);
     towerArr.push(topTower);
+  }
+
+  function moveClouds() {
+    cloudArr.forEach(cloud => {
+      const canvas = cloud.canvas;
+      cloud.left -= cloud.speed;
+      canvas.style.left = cloud.left +"px";
+
+      if (cloud.left<200 && !generatedCloud) {
+        cloudArr.push(new Cloud);
+        generatedCloud = true;
+      }
+
+      if (cloudArr[0].left<=-100) {
+        cloudArr[0].canvas.remove();
+        cloudArr.shift();
+        generatedCloud = false;
+      }
+
+    });
   }
 
   function moveTowers() {
@@ -266,7 +334,7 @@ function startNewGame() {
     if (birbPosBottom < bottomTowerTop || birbPosBottom > topTowerBottom) {
       removeControls();
       flashScreen();
-      console.log("Collision!");
+      // console.log("Collision!");
     }
   }
 

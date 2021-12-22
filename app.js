@@ -102,15 +102,80 @@ function startNewGame() {
     const visualContainer = document.createElement("div");
     visualContainer.classList.add("visual-container");
 
+    const birbCanvas = document.createElement("canvas");
+    birbCanvas.classList.add("birb-canvas");
+
+    drawBirb(birbCanvas);
     addWing(visualContainer);
 
-    birb.append(visualContainer);
+    birb.append(birbCanvas, visualContainer);
   }
 
   function addWing(parentElement) {
       const wing = document.createElement("div");
       wing.classList.add("wing", "wing-animation");
       parentElement.append(wing);
+  }
+
+  function drawBirb(canvas) {
+    const ctx = canvas.getContext("2d");
+    canvas.width = 50;
+    canvas.height = 50;
+
+    //draw body
+    ctx.strokeStyle = "black";
+    ctx.fillStyle = "yellow";
+    ctx.beginPath();
+    ctx.arc(30,30,30,Math.PI*1.5,Math.PI,true);
+    ctx.arc(15,30,15,Math.PI,Math.PI*0.5,true);
+    ctx.moveTo(15,45);
+    ctx.lineTo(30,45);
+    ctx.arc(30,30,15,Math.PI*0.5,Math.PI*2,true);
+    ctx.moveTo(45,30);
+    ctx.lineTo(45,15);
+    ctx.arc(30,15,15,Math.PI*2,Math.PI*1.5,true);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillRect(15,5,20,39);
+    ctx.fillRect(24,11,20,23);
+    ctx.fillRect(28,2,5,5);
+
+    
+
+
+    //draw eye
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.arc(40,10,5,Math.PI,Math.PI*2);
+    ctx.arc(40,20,5,0,Math.PI);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+  
+    //draw eye-dot
+    ctx.fillStyle = "black";
+    ctx.beginPath();
+    ctx.arc(42.5,17.5,1,0,Math.PI*2);
+    ctx.stroke();
+    ctx.fill();
+
+    //draw beak
+    ctx.fillStyle = "orange";
+    ctx.strokeStyle = "orange";
+    ctx.beginPath();
+    ctx.arc(47.5,35,2.5,Math.PI*1.5,Math.PI*0.5);
+    ctx.arc(37.5,35,2.5,Math.PI*0.5,Math.PI*1.5);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.arc(45,38,2.5,Math.PI*1.5,Math.PI*0.5);
+    ctx.arc(37.5,38,2.5,Math.PI*0.5,Math.PI*1.5);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+
   }
 
   function start() {

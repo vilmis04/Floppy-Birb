@@ -16,8 +16,8 @@ body {
 .birb {
   height: 50px;
   width: 50px;
-  background-color: yellow;
-  border: solid 1px black;
+  background-color: transparent;
+  /* border: solid 1px black; */
   position: absolute;
   z-index: 997;
   /* transition: 300ms;
@@ -84,6 +84,7 @@ body {
   position: absolute;
   width: 100px;
   background-color: green;
+  z-index: 100;
 }
 
 .towerBottom {
@@ -178,7 +179,7 @@ body {
 .wing {
   position: absolute;
   height: 60px;
-  width: 40px;
+  width: 30px;
   background: repeating-linear-gradient(
   0deg,
   orange,
@@ -213,4 +214,14 @@ body {
   width: 100px;
   z-index: 0;
   /* background-color: black; */
+}
+
+.birb-canvas {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+
+  /* background-color: white; */
 }

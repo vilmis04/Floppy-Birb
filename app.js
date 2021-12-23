@@ -37,11 +37,17 @@ function startNewGame() {
       this.height = height;
       this.hitbox = document.createElement("div");
       this.bottomSide = sideBool;
+      this.canvas = document.createElement("canvas");
+
 
       const hitbox = this.hitbox;
+      const canvas = this.canvas;
       hitbox.classList.add(classStr);
       hitbox.style.height = this.height + "px";
       hitbox.style.left = this.left + "px";
+      canvas.classList.add("tower-canvas");
+      drawTowers(canvas, this.bottomSide, height);
+      hitbox.append(canvas);
       grid.appendChild(hitbox);
     }
   }
@@ -69,6 +75,26 @@ function startNewGame() {
   }
 
   // Functions
+
+  function drawTowers(canvas, isBottom, height) {
+    const ctx = canvas.getContext("2d");
+    canvas.width = 100;
+    canvas.height = height;
+    ctx.fillStyle = "green";
+    ctx.strokeStyle = "black";
+
+    if (isBottom) {
+      ctx.rect(0,0,100,30);
+      ctx.rect(5,30,90,height-30);
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      ctx.rect(0,height-30,100,30);
+      ctx.rect(5,0,90,height-30);
+      ctx.fill();
+      ctx.stroke();
+    }
+  }
 
   function drawCloud(canvas) {
     const ctx = canvas.getContext("2d");
@@ -139,10 +165,7 @@ function startNewGame() {
     ctx.fillRect(15,5,20,39);
     ctx.fillRect(24,11,20,23);
     ctx.fillRect(28,2,5,5);
-
-    
-
-
+  
     //draw eye
     ctx.fillStyle = "white";
     ctx.beginPath();
@@ -244,7 +267,6 @@ function startNewGame() {
   }
 
   function gameOver() {
-    // console.log("Game Over");
     isGameOver = true;
 
     if (!isCollision) { flashScreen();}
@@ -262,8 +284,6 @@ function startNewGame() {
     highscore = scoreCounter;
     storage.setItem("highscore", highscore);
     }
-    // console.log("score: "+scoreCounter);
-    // console.log("highscore: "+highscore);
   }
 
   function displayScoreboard() {
@@ -319,7 +339,7 @@ function startNewGame() {
   }
 
   function generateTower() {
-    const bottomTowerHeight = Math.round(Math.random() * (500 - GAP_SIZE) + 10);
+    const bottomTowerHeight = Math.round(Math.random() * (450 - GAP_SIZE) + 50);
     const topTowerHeight = 640 - 65 - GAP_SIZE - bottomTowerHeight;
     const bottomTower = new Tower(bottomTowerHeight, "towerBottom", true);
     const topTower = new Tower(topTowerHeight, "towerTop", false);
@@ -399,7 +419,6 @@ function startNewGame() {
     if (birbPosBottom < bottomTowerTop || birbPosBottom > topTowerBottom) {
       removeControls();
       flashScreen();
-      // console.log("Collision!");
     }
   }
 

@@ -17,11 +17,8 @@ body {
   height: 50px;
   width: 50px;
   background-color: transparent;
-  /* border: solid 1px black; */
   position: absolute;
   z-index: 997;
-  /* transition: 300ms;
-    bottom: 300px; */
 }
 
 .grid {
@@ -49,21 +46,21 @@ body {
   background-size: 960px 100%;
   }
 
-  .platform-animation {
-    animation-name: platform-move;
-    animation-timing-function: linear;
-    animation-duration: 1992ms;
-    animation-iteration-count: infinite;
-  }
+.platform-animation {
+  animation-name: platform-move;
+  animation-timing-function: linear;
+  animation-duration: 1992ms;
+  animation-iteration-count: infinite;
+}
 
-  @keyframes platform-move {
-    from {
-      background-position: 0;
-    }
-    to {
-      background-position: -249px;
-    }
+@keyframes platform-move {
+  from {
+    background-position: 0;
   }
+  to {
+    background-position: -249px;
+  }
+}
 
 .ground {
   position: absolute;
@@ -83,7 +80,7 @@ body {
 .towerTop {
   position: absolute;
   width: 100px;
-  background-color: green;
+  background-color: transparent;
   z-index: 100;
 }
 
@@ -222,6 +219,13 @@ body {
   width: 100%;
   bottom: 0;
   left: 0;
+
+  /* background-color: white; */
+}
+
+.tower-canvas {
+  height: 100%;
+  width: 100%;
 
   /* background-color: white; */
 }

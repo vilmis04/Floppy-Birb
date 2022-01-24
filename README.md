@@ -28,7 +28,7 @@ A copy of popular mobile game Flappy Bird.
 
 ### Links
 
-- Solution URL: [Floppy Birb](https://github.com/vilmis04/Floppy-Birb/)
+- Solution URL: [Floppy Birb](https://vilmis04.github.io/Floppy-Birb/)
 
 ## My process
 

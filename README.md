@@ -2,16 +2,6 @@
 
 A copy of popular mobile game Flappy Bird.
 
-## Table of contents
-
-- [Overview](#overview)
-  - [The features](#the-features)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-- [Author](#author)
-
 ## Overview
 
 ### The features
